@@ -3,13 +3,14 @@ const { hash } = require("../utils/hashcr");
 class Blockchain {
   blockList;
   definity;
+
   constructor({ blockList, definity }) {
     this.blockList = blockList;
     this.definity = definity;
   }
 
   addBlock(block) {
-    if (block.hash.substring(0, this.definity) == "0".repeat(this.definity)) {
+    if (block.hash.substring(0, this.definity) === "0".repeat(this.definity)) {
       this.blockList.push(block);
     }
   }
@@ -20,29 +21,38 @@ class Blockchain {
 
   replace(blockList) {
     const blockChain = new Blockchain({ blockList });
+
     if (blockChain.isValid()) {
       if (blockList.length <= this.blockList.length) {
         return false;
       }
-      this.blockList.map((val, ind) => {
-        if (val.hash == blockList[ind].hash) {
-          return false;
-        }
-      });
+
+      const isDifferent = blockList.some(
+        (val, ind) => val.hash === this.blockList[ind]?.hash
+      );
+      if (!isDifferent) return false;
+
       this.blockList = blockList;
       return true;
     }
+
     return false;
   }
 
   getBlock(ind) {
-    return this.lengthBlock() - 1 && this.blockList[ind];
+    return ind >= 0 && ind < this.lengthBlock()
+      ? this.blockList[ind]
+      : undefined;
   }
-
+  
   isValid() {
     this.blockList.map((val, ind) => {
-      if (ind != 0 && val != this.blockList[ind - 1]) {
-        return false;
+      if (ind != 0) {
+        let { hash1, ...block1 } = val;
+        let { hash2, ...block2 } = this.blockList[ind - 1];
+        if (hash1 == hash(block1) && hash2 == hash(block2) && hash1 == hash2) {
+          return false;
+        }
       }
     });
     return true;
