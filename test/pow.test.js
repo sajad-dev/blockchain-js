@@ -10,6 +10,6 @@ jest.setTimeout(3000);
 
 describe("", () => {
   test("should complete in under 5 seconds", async () => {
-    const result = await mining({ timestamp, lastHash, trx, definity });
+     mining({ timestamp, lastHash, trx, definity });
   });
 });
