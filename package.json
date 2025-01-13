@@ -1,0 +1,19 @@
+{
+  "name": "blockchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "blockchain-js"
+  },
+  "author": "sajad-dev",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mocha": "^11.0.1"
+  }
+}
