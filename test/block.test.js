@@ -1,17 +1,15 @@
-const chai = require("chai");
-const expect = chai.expect;
-const block = require("../src/blockchain/block");
+const Block = require("../src/blockchain/block");
 const { hash } = require("../src/utils/hashcr");
 const { GENESIS } = require("../src/config/setup");
 
 describe("Block test", () => {
   const timestamp = 0;
-  const lastHash = hash(block.genesis);
+  const lastHash = hash(Block.genesis());
   const nonce = 0;
   const definity = 3;
   const trx = [];
 
-  const Block = block({
+  const block = new Block({
     timestamp,
     lastHash,
     nonce,
@@ -20,15 +18,15 @@ describe("Block test", () => {
   });
 
   it("Check attribute", () => {
-    expect(block.timestamp).equal(timestamp, "Timestamp");
-    expect(block.lastHash).equal(lastHash, "LastHash");
-    expect(block.nonce).equal(nonce, "Nonce");
-    expect(block.definity).equal(definity, "definity");
-    expect(block.trx).equal(trx, "trx");
+    expect(block.timestamp).toEqual(timestamp, "Timestamp");
+    expect(block.lastHash).toEqual(lastHash, "LastHash");
+    expect(block.nonce).toEqual(nonce, "Nonce");
+    expect(block.definity).toEqual(definity, "definity");
+    expect(block.trx).toEqual(trx, "trx");
   });
 
   it("Check Genesis", () => {
-    expect(block.genesis.hash).equal(hash(GENESIS), "Wrong genesis");
+    expect(Block.genesis().hash).toEqual(hash(GENESIS), "Wrong genesis");
   });
   it("Ming", () => {
     //Todo
