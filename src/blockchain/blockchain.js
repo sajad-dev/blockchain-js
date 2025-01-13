@@ -1,11 +1,17 @@
+const { hash } = require("../utils/hashcr");
+
 class Blockchain {
   blockList;
-  constructor({ blockList }) {
+  definity;
+  constructor({ blockList, definity }) {
     this.blockList = blockList;
+    this.definity = definity;
   }
 
   addBlock(block) {
-    this.blockList.push(block);
+    if (block.hash.substring(0, this.definity) == "0".repeat(this.definity)) {
+      this.blockList.push(block);
+    }
   }
 
   lengthBlock() {

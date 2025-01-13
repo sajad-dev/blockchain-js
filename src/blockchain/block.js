@@ -5,12 +5,10 @@ class Block {
   timestamp;
   trx;
   lastHash;
-  definity;
   nonce;
   hash;
 
-  constructor({ timestamp, trx, lastHash, definity, nonce }) {
-    this.definity = definity;
+  constructor({ timestamp, trx, lastHash, nonce }) {
     this.timestamp = timestamp;
     this.trx = trx;
     this.nonce = nonce;
@@ -22,10 +20,10 @@ class Block {
       timestamp: this.timestamp,
       trx: this.trx,
       lastHash: this.lastHash,
-      definity: this.definity,
       nonce: this.nonce,
     };
     block["hash"] = hash(block);
+    this.hash = hash(block)
     return block;
   }
 

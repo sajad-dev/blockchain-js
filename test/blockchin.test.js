@@ -1,38 +1,36 @@
 const Blockchain = require("../src/blockchain/blockchain");
 const Block = require("../src/blockchain/block");
 const { hash } = require("../src/utils/hashcr");
+const { mining } = require("../src/utils/mining");
 
 describe("Blockchain Test", () => {
   const timestamp = 0;
   const lastHash = Block.genesis().hash;
   const nonce = 0;
-  const definity = 3;
   const trx = [];
+  const definity = 2;
 
   const block = new Block({
     timestamp,
     lastHash,
     nonce,
-    definity,
     trx,
   });
   const blockList = [Block.genesis(), block.mining()];
-  const blockChain = new Blockchain({ blockList });
+  const blockChain = new Blockchain({ blockList, definity });
 
   let block2 = new Block({
     timestamp,
-    lastHash: block.hash,
+    lastHash,
     nonce,
-    definity,
     trx,
   });
-  const blockList2 = [Block.genesis, block2.mining(), block2];
+  const blockList2 = [Block.genesis, block2.mining(), block2.mining()];
 
   let block3 = new Block({
     timestamp,
     lastHash,
     nonce,
-    definity,
     trx,
   });
   const blockList3 = [Block.genesis, block3.mining(), block2];
@@ -61,11 +59,11 @@ describe("Blockchain Test", () => {
     expect(blockChain.replace(blockList2)).toEqual(true, "Block 2");
     expect(blockChain.replace(blockList3)).toEqual(false, "Block 2");
   });
-  it("Check add block", () => {
-    blockChain.addBlock(block2);
-
-    expect(blockChain.blockList[blockChain.blockList.length - 1].hash).toEqual(
-      block2.hash
+  it("add block", () => {
+    const block = mining({ timestamp, lastHash, trx, definity });
+    blockChain.addBlock(block);
+    expect(blockChain.blockList[blockChain.blockList.length - 1]).toEqual(
+      block
     );
   });
 });
