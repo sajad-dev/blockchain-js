@@ -17,13 +17,13 @@ class Block {
     this.lastHash = lastHash;
   }
 
-  static mining() {
+  mining() {
     const block = {
       timestamp: this.timestamp,
       trx: this.trx,
       lastHash: this.lastHash,
       definity: this.definity,
-      nonce: this.definity,
+      nonce: this.nonce,
     };
     block["hash"] = hash(block);
     return block;
@@ -35,7 +35,6 @@ class Block {
     return genesis;
   }
 
-  static mining() {}
   //
 }
 

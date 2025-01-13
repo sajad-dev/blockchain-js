@@ -28,7 +28,16 @@ describe("Block test", () => {
   it("Check Genesis", () => {
     expect(Block.genesis().hash).toEqual(hash(GENESIS), "Wrong genesis");
   });
-  it("Ming", () => {
-    //Todo
+  it("Mining", () => {
+    expect(block.mining().hash).toEqual(
+      hash({
+        timestamp,
+        trx,
+        lastHash,
+        definity,
+        nonce,
+      }),
+      "Wrong genesis"
+    );
   });
 });
