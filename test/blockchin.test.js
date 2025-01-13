@@ -4,7 +4,7 @@ const { hash } = require("../src/utils/hashcr");
 
 describe("Blockchain Test", () => {
   const timestamp = 0;
-  const lastHash = hash(Block.genesis());
+  const lastHash = Block.genesis().hash;
   const nonce = 0;
   const definity = 3;
   const trx = [];
@@ -16,7 +16,7 @@ describe("Blockchain Test", () => {
     definity,
     trx,
   });
-  const blockList = [Block.genesis, block.mining()];
+  const blockList = [Block.genesis(), block.mining()];
   const blockChain = new Blockchain({ blockList });
 
   let block2 = new Block({
@@ -38,13 +38,13 @@ describe("Blockchain Test", () => {
   const blockList3 = [Block.genesis, block3.mining(), block2];
 
   it("Check attribute block", () => {
-    expect(blockChain.timestamp).toEqual(blockList, "block List");
+    expect(blockChain.blockList).toEqual(blockList, "block List");
   });
 
   it("Check Valid blockchain", () => {
-    let valid;
-    blockList.map((key, value) => {
-      if (key != 0 && value.hash != blockList[key - 1]) {
+    let valid = true;
+    blockList.map((value, ind) => {
+      if (ind != 0 && value.lastHash != blockList[ind - 1].hash) {
         valid = false;
         return;
       }
@@ -62,7 +62,7 @@ describe("Blockchain Test", () => {
     expect(blockChain.replace(blockList3)).toEqual(false, "Block 2");
   });
   it("Check add block", () => {
-    blockChain.add(block2);
+    blockChain.addBlock(block2);
 
     expect(blockChain.blockList[blockChain.blockList.length - 1].hash).toEqual(
       block2.hash
