@@ -14,7 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^29.7.0",
-    "mocha": "^11.0.1"
+    "mocha": "^11.0.1",
+    "source-map-support": "^0.5.21"
   },
   "dependencies": {
     "elliptic": "^6.6.1"
